@@ -1,0 +1,115 @@
+---
+title: "Русский RMarkdown для создания pdf-документа"
+subtitle: "решены проблемы с русским языком при генерации pdf"
+author: "Илья Кочергин"
+abstract: "rmarkdown-документ с русскими символами для корректной генерации pdf через LaTeX"
+output: 
+    pdf_document:
+        latex_engine: xelatex
+keep_tex: true        
+header-includes:
+   - \XeTeXdefaultencoding utf8
+   - \usepackage{xltxtra}
+   - \usepackage{fontspec}
+   - \setmainfont{Times New Roman}
+   - \setsansfont{Arial}
+   - \setmonofont{Courier New}
+   - \newfontfamily{\cyrillicfont}{Times New Roman}
+   - \newfontfamily{\cyrillicfonttt}{Courier New} 
+   - \newfontfamily{\cyrillicfontsf}{Arial} 
+   - \usepackage[english,russian]{babel}
+---
+# Проблеммы с русским символами и их решение 
+
+## Источники проблемм
+
+* шаблон LaTeX, который используется для генерации PDF-файла не содержит необходимых для поддержки русского языка команд в преамбуле. Русские символы просто исчезают из результирующего документа 
+
+* при сохранении графиков  в pdf-файл возникают ошибки  с русскими символами если для открытия pdf-файла \("устройства"\) используется функция `pdf("plot_file_name.pdf")`. Русские символы заменяются на непонятные символы в результирующем pdf-файле  и вызывают большое количество сообщений типа warning.
+
+## Как решать проблемму с LaTeX
+
+Добавляем в заголовок документа на языке YAML 
+
+```YAML
+---
+output: 
+    pdf_document:
+        latex_engine: xelatex
+keep_tex: true        
+header-includes:
+   - \XeTeXdefaultencoding cp1251
+   - \usepackage{xltxtra}
+   - \usepackage{fontspec}
+   - \setmainfont{Times New Roman}
+   - \setsansfont{Arial}
+   - \setmonofont{Courier New}
+   - \newfontfamily{\cyrillicfont}{Times New Roman}
+   - \newfontfamily{\cyrillicfonttt}{Courier New} 
+   - \newfontfamily{\cyrillicfontsf}{Arial} 
+   - \usepackage[english,russian]{babel}
+---
+```
+
+Нужно правильно указать кодировку исходного файла:
+
+ В Windows чаcто используется кодировка cp1251:
+```tex
+ \XeTeXdefaultencoding cp1251
+```
+
+Но кодировка utf8 становится все разнобразие символов Unicode.
+
+```tex
+ \XeTeXdefaultencoding utf8
+```
+
+
+## Как решать проблемму с pdf graphical device
+
+При интерактивной работе  в R для сохранения графика в pdf-файл мы используюем открытие графического устройства таким образом.
+
+```{r wrong_pdf_func, eval=F}
+pdf("myplot.pdf")
+plot(cars,main="Русский заголовок",xlab="скорость",ylab="тормозной путь")
+## Warning in title(...): conversion failure on 'Русский заголовок' in
+## 'mbcsToSbcs': dot substituted for <d0>
+## Warning in title(...): conversion failure on 'Русский заголовок' in
+## 'mbcsToSbcs': dot substituted for <a0>
+dev.off()
+```
+Но русские буквы вызывают ошибки. 
+
+Для преодоления проблеммы достаточно испльзовать функцию cairo_pdf().
+
+```r
+cairo_pdf("myplot.pdf")
+plot(cars,main="Русский заголовок",xlab="скорость",ylab="тормозной путь")
+dev.off()
+```
+А при опция `dev=` chunk'a  `{r, dev='cairo_pdf'}` решает аналогичную проблемму при генерации графиков из Markdown
+
+```{r write_plot2, dev='cairo_pdf',echo=FALSE}
+  plot(cars,main="Русский заголовок",xlab="скорость",ylab="тормозной путь")
+```
+
+
+Этот метод раобтает не только с базавой графикой, но и с ggplot2
+
+Подготовим 
+
+```{r ggplot_demo_prep}
+library(ggplot2)
+library(tibble)
+heights <- tibble(имя=c("Вася","Петя","Коля"),
+                  рост=c(172,188,162))
+```
+
+и нарисуем график 
+
+```{r ggplot_demo, dev='cairo_pdf'}
+ggplot(data=heights)+
+  geom_bar(mapping = aes(x=имя,y=рост),stat = "identity")
+```
+
+
