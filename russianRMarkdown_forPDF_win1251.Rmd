@@ -5,6 +5,7 @@ author: "Илья Кочергин"
 output: 
     pdf_document:
         latex_engine: xelatex
+keep_markdown: true        
 keep_tex: true        
 header-includes:
    - \XeTeXdefaultencoding cp1251
@@ -57,7 +58,7 @@ header-includes:
  \XeTeXdefaultencoding cp1251
 ```
 
-Но кодировка utf8 становится все разнобразие символов Unicode.
+Но более прогрессивная кодировка utf8 дает возможность использовать все разнобразие символов Unicode, и применяется по умолчанию в Mac OS X.
 
 ```tex
  \XeTeXdefaultencoding utf8
