@@ -6,7 +6,7 @@ Rmarkdown templates to generate PDF file with cyrillic characters and guide to s
 
 see problem and solution desciption in pdf files 
 
-* russianRMarkdown_forPDF_utf8.pdf 
+* [russianRMarkdown_forPDF_utf8.pdf](russianRMarkdown_forPDF_utf8.pdf) 
 * russianRMarkdown_forPDF_win1251.pdf
 
 
