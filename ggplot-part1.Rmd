@@ -1,0 +1,95 @@
+---
+title: "ggplot2 part1"
+author: Ilya Kochergin
+output: html_notebook
+---
+
+# Gramma of Graphics 
+
+* Data
+* Aestatic Mapping
+* Geometric objects
+* Coordinate system
+* Statistical Tranformation
+* Facetes
+
+Инициализация
+
+```{r setup}
+library(ggplot2)
+
+```
+
+
+```{r mtcars}
+head(mtcars)
+
+```
+
+
+Scatter plot
+
+```{r}
+
+ggplot(data=mtcars) + 
+  geom_point(mapping = aes(x=disp,y=mpg), col="green")
+```
+
+
+```{r}
+
+ggplot(data=mtcars) + 
+  geom_point(mapping = aes(x=disp,y=mpg, col=I("green")))
+```
+
+```{r}
+
+ggplot(data=mtcars) + 
+  geom_line(mapping = aes(x=disp,y=mpg, col=I("green")))
+```
+```{r histogram}
+ggplot(mtcars) +
+ geom_bar(mapping = aes(x = gear), stat="count") 
+```
+
+```{r}
+mtcars[mtcars$gear==3,]
+```
+
+```{r}
+ggplot(mtcars) +
+ geom_histogram(mapping = aes(x = qsec), binwidth = 1.2,fill="wheat", col="light blue") 
+```
+
+
+```{r}
+
+ggplot(data=mtcars) + 
+  geom_smooth(mapping = aes(x=disp,y=mpg))
+```
+
+```{r}
+
+ggplot(data=mtcars) + 
+  geom_smooth(mapping = aes(x=disp,y=mpg),method="lm")
+```
+
+
+
+
+```{r}
+
+ggplot(data=mtcars) + 
+  geom_smooth(mapping = aes(x=disp,y=mpg),method="lm",formula=y~poly(x,2))
+```
+
+
+
+
+
+```{r}
+
+ggplot(data=mtcars,mapping = aes(x=disp,y=mpg)) + 
+  geom_smooth(method="lm",formula=y~poly(x,2))+
+  geom_point(col="red")
+```
