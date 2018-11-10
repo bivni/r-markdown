@@ -34,12 +34,15 @@ Scatter plot
 ggplot(data=mtcars) + 
   geom_point(mapping = aes(x=disp,y=mpg), col="green")
 ```
+```{r}
+str(factor("green"))
+```
 
 
 ```{r}
 
 ggplot(data=mtcars) + 
-  geom_point(mapping = aes(x=disp,y=mpg, col=I("green")))
+  geom_point(mapping = aes(x=disp,y=mpg,, col=I("green")))
 ```
 
 ```{r}
@@ -47,9 +50,31 @@ ggplot(data=mtcars) +
 ggplot(data=mtcars) + 
   geom_line(mapping = aes(x=disp,y=mpg, col=I("green")))
 ```
+
 ```{r histogram}
 ggplot(mtcars) +
- geom_bar(mapping = aes(x = gear), stat="count") 
+ geom_bar(mapping = aes(x = gear)) 
+```
+
+
+```{r ggplot_demo_prep}
+library(ggplot2)
+library(tibble)
+heights <- tibble(имя=c("Вася","Петя","Коля"),
+                  рост=c(172,188,162))
+```
+
+и нарисуем график 
+
+```{r ggplot_demo}
+ggplot(data=heights)+
+  geom_bar(mapping = aes(x=имя,y=рост),stat = "identity")
+```
+
+
+```{r histogram1}
+ggplot(mtcars) +
+ geom_bar(mapping = aes(x = gear), stat='count') 
 ```
 
 ```{r}
@@ -58,7 +83,13 @@ mtcars[mtcars$gear==3,]
 
 ```{r}
 ggplot(mtcars) +
- geom_histogram(mapping = aes(x = qsec), binwidth = 1.2,fill="wheat", col="light blue") 
+ geom_histogram(mapping = aes(x = qsec), binwidth = 0.5,fill="wheat", col="light blue") 
+```
+
+
+```{r}
+ggplot(mtcars) +
+ geom_histogram(mapping = aes(x = qsec), bins = 15,fill="wheat", col="light blue") 
 ```
 
 
@@ -66,6 +97,12 @@ ggplot(mtcars) +
 
 ggplot(data=mtcars) + 
   geom_smooth(mapping = aes(x=disp,y=mpg))
+```
+
+```{r}
+
+ggplot(data=mtcars) + 
+  geom_smooth(mapping = aes(x=disp,y=mpg),se = F)
 ```
 
 ```{r}

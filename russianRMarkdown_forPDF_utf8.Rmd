@@ -3,7 +3,8 @@ title: "Русский RMarkdown для создания pdf-документа"
 subtitle: "решены проблемы с русским языком при генерации pdf"
 author: "Илья Кочергин"
 abstract: "rmarkdown-документ с русскими символами для корректной генерации pdf через LaTeX"
-output: 
+output: html_document
+output:
     pdf_document:
         latex_engine: xelatex
 keep_markdown: true        
