@@ -1,0 +1,127 @@
+---
+title: "Занятие 12 сентября"
+author: "Ilya Kochering"
+date: "19 сентября"
+output:
+  html_document:
+    df_print: paged
+  html_notebook:
+    df_print: paged
+  word_document: default
+---
+
+
+```{r setup,echo=FALSE}
+library(ggplot2)
+```
+
+
+## YAML -yet another markup language
+
+## Графики кривых 
+
+```{r sinus}
+
+curve(sin,-3*pi,3*pi)
+```
+Код скрыт
+
+А результат есть
+```{r square root, echo=FALSE}
+
+curve(sqrt,0,3*pi)
+```
+
+
+
+Код открыт
+
+А результата нет
+```{r assignment, include=FALSE}
+
+global_var<- 123
+```
+
+
+```{r}
+print(global_var)
+```
+
+
+
+
+Изменяем цвет `col=номер|строка`
+
+
+```{r color}
+
+curve((sin(2*x)-0.5)^2,-3*pi,3*pi
+      ,n = 100100,col="light blue")
+
+```
+
+
+```{r type}
+curve(sin,col="red", from=-pi,to=pi, n=10, type = "b")
+
+```
+
+## Матрицы 
+
+
+Матрицы имеют атрибут `dim`
+
+
+```{r matrix1}
+m1 <- matrix(byrow = TRUE,
+             c(11,12,13,
+               21,22,23),nrow=2)
+m1
+```
+
+Размерность `dim(m1)=` `r dim(m1)`
+
+
+```sql
+select * from сотрудники;
+
+```
+
+
+<!--
+
+m1[2,3]
+m1[2,3] <- 1023
+m1
+m1[,3]
+m1[,3,drop=F]
+dim(m1)
+m1c <- m1
+dim(m1c) <- NULL
+m1c
+dim(m1c) <- c(3,2)
+m1c
+
+m1[,-3]
+
+
+m<-matrix(
+  c(1,0,-1,
+    0,-33,2,
+    1,2,10),byrow =TRUE, nrow=3)
+m
+b=c(5,-2,5)
+dim(b)<-c(3,1)
+b
+
+det(m)
+x<-solve(m,b)
+x
+
+b1<-m%*%x
+
+
+```
+-->
+
+
