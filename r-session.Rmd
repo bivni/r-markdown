@@ -124,4 +124,72 @@ b1<-m%*%x
 ```
 -->
 
+## Сохранение графиков
+
+```{r}
+cairo_pdf("myplot.pdf")
+
+plot(y~x,data=mtcars,main='русский заголовок')
+
+dev.off()
+```
+
+## Логические величины
+
+
+```{r bool_demo}
+a=c(TRUE,T,F,FALSE)
+cat("  вектор a:",a,"\n", sep="\t") # "\n" -- new line character ; \t - табуляция
+cat("отрицание !a" , !a,"\n", sep="\t") # ! - отрицание
+b=c(T,F,T,F)
+cat(" вектор b:",b,"\n", sep="\t")
+cat("  или a|b" , a|b,"\n", sep="\t") # символ "pipe" вертикальная палка - логическое или
+cat("    и a&b" , a&b,"\n", sep="\t") # символ & "ampersand"  - логическое и
+```
+## Строковые типы
+
+```{r str_demo}
+cat("paste:\n")
+paste(LETTERS,letters,1:26,sep = ' - ')
+cat("cat:\n")
+
+cat(LETTERS,letters,1:26,sep = ' - ')
+
+```
+## Числовые
+
+```{r}
+v1 <- integer(10)
+v2 <- numeric(10)
+v3 <- seq(from=1,to=20,length.out = 10)
+str(v2)
+str(v3)
+```
+
+
+## DataFrame
+
+```{r}
+
+library(tidyverse)
+
+student_tab = tibble(
+        name=paste0("student",1:6),
+        is.married = c(T,T,F,F,T,T),
+        is.economist = c(T,F,T,T,F,F) ,
+        team = c("Динамо","Спартак","Зенит", "Спартак","ЦСКА","ЦСКА"),
+        performance = c("неуд","отл","отл","удовл","хор","хор"),
+        height=c(159,200,173,188,168,190.5))
+        
+student_tab
+```
+
+
+```{r}
+
+student_tab$team_factor <- as.factor(student_tab$team)
+str(student_tab$team_factor)
+
+
+```
 
